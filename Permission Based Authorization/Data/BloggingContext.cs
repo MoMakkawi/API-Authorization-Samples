@@ -14,4 +14,11 @@ public class BloggingContext(DbContextOptions<BloggingContext> options) : DbCont
         if (!optionsBuilder.IsConfigured)
             optionsBuilder.UseInMemoryDatabase("BloggingDB");
     }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<UserPermission>()
+            .HasKey(up => new { up.UserId, up.Permission });
+
+        base.OnModelCreating(modelBuilder);
+    }
 }
