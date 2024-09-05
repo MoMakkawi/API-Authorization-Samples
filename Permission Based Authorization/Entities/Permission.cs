@@ -2,5 +2,6 @@
 
 public enum Permission
 {
-    GetHello = 1,
+    GetSecret = 1,
+    GetHello = 2,
 }
