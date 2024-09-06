@@ -26,6 +26,7 @@ public static class Seeder
             context.Users.AddRange(
                 new User
                 {
+                    Id = 1,
                     Email = "Admin@mail.com",
                     FirstName = "Admin FN",
                     LastName = "Admin LN",
@@ -34,12 +35,27 @@ public static class Seeder
                 },
                 new User
                 {
+                    Id = 2,
                     Email = "MoMakkawi@mail.com",
                     FirstName = "Mo",
                     LastName = "Makkawi",
                     UserName = "MoMakkawi",
                     Password = "Password123"
                 }
+            );
+
+            context.SaveChanges();
+        }
+
+        return context;
+    }
+    public static BloggingContext SeedUserPermission(this BloggingContext context)
+    {
+        if (!context.Set<UserPermission>().Any())
+        {
+            context.Set<UserPermission>().AddRange(
+                new UserPermission { UserId = 1, Permission = Permission.GetSecret },
+                new UserPermission { UserId = 2, Permission = Permission.GetHello }
             );
 
             context.SaveChanges();
