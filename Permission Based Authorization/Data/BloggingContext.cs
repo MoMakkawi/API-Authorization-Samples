@@ -9,11 +9,6 @@ public class BloggingContext(DbContextOptions<BloggingContext> options) : DbCont
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<User> Users { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if (!optionsBuilder.IsConfigured)
-            optionsBuilder.UseInMemoryDatabase("BloggingDB");
-    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<UserPermission>()
