@@ -10,7 +10,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 
-namespace Permission_Based_Authorization.Middleware;
+namespace Permission_Based_Authorization.AuthenticationAndAuthorization;
 
 [Obsolete]
 internal class BasicAuthHandler(

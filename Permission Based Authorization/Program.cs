@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 using Permission_Based_Authorization.Data;
-using Permission_Based_Authorization.Middleware;
+using Permission_Based_Authorization.Entities;
+using Permission_Based_Authorization.AuthenticationAndAuthorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +40,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+
 // Database Service
 builder.Services.AddDbContext<BloggingContext>(options =>
     options.UseInMemoryDatabase("BloggingDB"));
@@ -51,7 +52,8 @@ app.Services.CreateScope()
     .ServiceProvider
     .GetRequiredService<BloggingContext>()
     .SeedUsers()
-    .SeedBlogs();
+    .SeedBlogs()
+    .SeedUserPermission();
 
 app.UseSwagger();
 app.UseSwaggerUI();
@@ -59,9 +61,21 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapGet("/hello", [Authorize] () => "Hello From Minimal API ")
-    .WithName("GetHello")
+var group = app.MapGroup("/api")
+    .AddEndpointFilter<PermissionFilter>();
+
+group.MapGet("/get-secret", [CheckPermission(Permission.GetSecret)] () => "Admin Secret!")
+    .WithName("GetSecret")
     .WithOpenApi();
+
+group.MapGet("/get-hello", () => "Hello, World !")
+    .WithOpenApi()
+    .WithName("GetHello")
+    .WithMetadata
+    (
+        new CheckPermissionAttribute(Permission.GetSecret),
+        new CheckPermissionAttribute(Permission.GetHello)
+    );
 
 app.Run();
 
