@@ -68,7 +68,7 @@ public class PermissionFilter(BloggingContext DbContext) : IEndpointFilter
 }
 ```
 
-- Finally in program.cs :
+- Finally in [program.cs](https://github.com/MoMakkawi/API-Authorization-Samples/blob/master/Permission%20Based%20Authorization/Program.cs) :
 ```cs
 // some code ...
 var group = app.MapGroup("/api")
