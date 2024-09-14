@@ -27,7 +27,7 @@ public sealed class CheckPermissionAttribute(Permission permission) : Attribute
     public readonly Permission Permission = permission;
 }
 ```
-- I made PermissionFilter a filter to check if the user has permission to execute the requested endpoint.
+- I made [PermissionFilter](https://github.com/MoMakkawi/API-Authorization-Samples/blob/master/Permission%20Based%20Authorization/AuthenticationAndAuthorization/PermissionFilter.cs) a filter to check if the user has permission to execute the requested endpoint.
 ```cs
 public class PermissionFilter(BloggingContext DbContext) : IEndpointFilter
 {
