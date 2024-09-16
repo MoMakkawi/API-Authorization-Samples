@@ -64,13 +64,13 @@ app.UseAuthorization();
 var group = app.MapGroup("/api");
 
 group.MapGet("/get-secret", 
-    [Authorize(Roles = Roles.ADMIN)] 
+    [Authorize(Roles = Roles.ADMIN)] // // only for user that one of his roles is admin
     () => "Admin Secret!")
     .WithName("GetSecret")
     .WithOpenApi();
 
 group.MapGet("/get-welcome",
-    [Authorize(Roles = Roles.ADMIN)] // admin and user and guest 
+    [Authorize(Roles = Roles.ADMIN)] // only for user that admin and user at same time
     [Authorize(Roles = Roles.USER)]
     () => "Hello, World !")
     .WithOpenApi()
