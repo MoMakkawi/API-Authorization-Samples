@@ -11,7 +11,43 @@ public sealed class UserRole
     public required string Role { get; set; }
 }
 ```
-- In BasicAuthHandler.cs you must add user roles as claims 
+- In [BasicAuthHandler.cs](https://github.com/MoMakkawi/API-Authorization-Samples/blob/master/Role%20Based%20Authorization/AuthenticationAndAuthorization/BasicAuthHandler.cs) you must add user roles as claims, eg:
+```cs
+// some code...
+        // create user roles claims.
+        var claims = await DbContext
+            .Set<UserRole>()
+            .Where(ur => ur.UserId == user.Id)
+            .Select(ur => new Claim(ClaimTypes.Role, ur.Role))
+            .ToListAsync();
+
+        // add name id claim.
+        claims.Add(new(ClaimTypes.NameIdentifier, user.Id.ToString()));
+//some code...
+```
+- Finally in [Program.cs](https://github.com/MoMakkawi/API-Authorization-Samples/blob/master/Role%20Based%20Authorization/Program.cs):
+```cs
+//some code...
+group.MapGet("/get-secret", 
+    [Authorize(Roles = Roles.ADMIN)] // only for user that one of his roles is admin
+    () => "Admin Secret!")
+    .WithName("GetSecret")
+    .WithOpenApi();
+
+group.MapGet("/get-welcome",
+    [Authorize(Roles = Roles.ADMIN)] // admin and user and guest 
+    [Authorize(Roles = Roles.USER)]
+    () => "Hello, World !")
+    .WithOpenApi()
+    .WithName("GetWelcome");
+
+group.MapGet("/get-hello",
+    [Authorize(Roles = $"{Roles.ADMIN},{Roles.USER}")] // admin or user
+    () => "Hello, World !")
+    .WithOpenApi()
+    .WithName("GetHello");
+//some code...
+```
 
 ## Permission-Based Authorization:
 Most important things:
