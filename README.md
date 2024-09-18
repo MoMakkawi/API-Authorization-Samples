@@ -1,5 +1,18 @@
 # ASP .NET Core Web API Authorization Implementation Samples :
 Note: There are many ways to implement those ideas but I will show you mine I also implemented [Basic Authentication](https://github.com/MoMakkawi/API-Authentication-Samples?tab=readme-ov-file#basic-authentication).
+## Role-Based Authorization:
+Most important things:
+- I created a static class called [Roles](https://github.com/MoMakkawi/API-Authorization-Samples/blob/master/Role%20Based%20Authorization/Entities/Role.cs), which has roles as constant strings ```"ADMIN", "USER", "GUEST"```.
+- I created a DB table to know every user's roles does he/she have, this table has a complex primary key UserId + Role.
+```cs
+public sealed class UserRole
+{
+    public int UserId { get; set; }
+    public required string Role { get; set; }
+}
+```
+- In BasicAuthHandler.cs you must add user roles as claims 
+
 ## Permission-Based Authorization:
 Most important things:
 - I used an enum for your permission, in some cases you will make permissions 
