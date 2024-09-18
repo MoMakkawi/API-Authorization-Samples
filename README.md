@@ -35,7 +35,7 @@ group.MapGet("/get-secret",
     .WithOpenApi();
 
 group.MapGet("/get-welcome",
-    [Authorize(Roles = Roles.ADMIN)] // admin and user and guest 
+    [Authorize(Roles = Roles.ADMIN)] // only for user that admin and user at same time
     [Authorize(Roles = Roles.USER)]
     () => "Hello, World !")
     .WithOpenApi()
