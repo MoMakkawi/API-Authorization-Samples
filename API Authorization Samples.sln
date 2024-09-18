@@ -5,7 +5,9 @@ VisualStudioVersion = 17.10.35004.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Permission Based Authorization", "Permission Based Authorization\Permission Based Authorization.csproj", "{88D35A38-DB86-42CA-8AA3-2A2717CFBA10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Role Based Authorization", "Role Based Authorization\Role Based Authorization.csproj", "{D4F0A26C-B347-42AF-8714-CA4C9A4EEFBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Role Based Authorization", "Role Based Authorization\Role Based Authorization.csproj", "{D4F0A26C-B347-42AF-8714-CA4C9A4EEFBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Policy Based Authorization", "Policy Based Authorization\Policy Based Authorization.csproj", "{EE19127A-9854-41FE-A644-4419CA5A84DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{D4F0A26C-B347-42AF-8714-CA4C9A4EEFBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4F0A26C-B347-42AF-8714-CA4C9A4EEFBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4F0A26C-B347-42AF-8714-CA4C9A4EEFBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE19127A-9854-41FE-A644-4419CA5A84DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE19127A-9854-41FE-A644-4419CA5A84DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE19127A-9854-41FE-A644-4419CA5A84DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE19127A-9854-41FE-A644-4419CA5A84DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
