@@ -4,7 +4,7 @@ using Permission_Based_Authorization.Entities;
 
 namespace Permission_Based_Authorization.Data;
 
-public class BloggingContext(DbContextOptions<BloggingContext> options) : DbContext(options)
+internal class BloggingContext(DbContextOptions<BloggingContext> options) : DbContext(options)
 {
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<User> Users { get; set; }

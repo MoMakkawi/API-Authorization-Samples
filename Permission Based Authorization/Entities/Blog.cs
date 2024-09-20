@@ -1,6 +1,6 @@
 ﻿namespace Permission_Based_Authorization.Entities;
 
-public sealed class Blog
+internal sealed class Blog
 {
     public int Id { get; set; }
     public required string Name { get; set; }

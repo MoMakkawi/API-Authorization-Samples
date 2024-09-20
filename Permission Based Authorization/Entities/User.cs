@@ -1,6 +1,6 @@
 ﻿namespace Permission_Based_Authorization.Entities;
 
-public class User
+internal sealed class User
 {
     public int Id { get; set; }
     public required string UserName { get; set; }

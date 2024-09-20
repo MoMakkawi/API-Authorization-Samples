@@ -1,6 +1,6 @@
 ﻿namespace Permission_Based_Authorization.Entities;
 
-public enum Permission
+internal enum Permission
 {
     GetSecret = 1,
     GetHello = 2,
