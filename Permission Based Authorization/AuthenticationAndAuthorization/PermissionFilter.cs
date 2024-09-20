@@ -6,7 +6,7 @@ using Permission_Based_Authorization.Entities;
 
 namespace Permission_Based_Authorization.AuthenticationAndAuthorization;
 
-public class PermissionFilter(BloggingContext DbContext) : IEndpointFilter
+internal class PermissionFilter(BloggingContext DbContext) : IEndpointFilter
 {
     public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
     {

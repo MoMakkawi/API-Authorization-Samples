@@ -2,7 +2,7 @@
 
 namespace Permission_Based_Authorization.Data;
 
-public static class Seeder
+internal static class Seeder
 {
     public static BloggingContext SeedBlogs(this BloggingContext context)
     {
