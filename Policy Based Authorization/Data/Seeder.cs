@@ -31,16 +31,18 @@ internal static class Seeder
                     FirstName = "Admin FN",
                     LastName = "Admin LN",
                     UserName = "Admin",
-                    Password = "Password"
+                    Password = "Password",
+                    Birthday = DateOnly.Parse("2000-02-12")
                 },
                 new User
                 {
                     Id = 2,
-                    Email = "MoMakkawi@mail.com",
+                    Email = "MoMakkawi@Hotmail.com",
                     FirstName = "Mo",
                     LastName = "Makkawi",
                     UserName = "MoMakkawi",
-                    Password = "Password123"
+                    Password = "Password123",
+                    Birthday = DateOnly.MaxValue,
                 }
             );
 
