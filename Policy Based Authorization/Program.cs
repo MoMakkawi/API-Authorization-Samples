@@ -1,4 +1,8 @@
+using System.Security.Claims;
+
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Policy_Based_Authorization.AuthenticationAndAuthorization;
@@ -10,7 +14,26 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAuthentication("Basic")
     .AddScheme<AuthenticationSchemeOptions, BasicAuthHandler>("Basic", null);
-builder.Services.AddAuthorization();
+
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("AgePlus18", builder =>
+    {
+        builder.RequireAssertion(context =>
+        {
+            if (context.User.FindFirstValue("Birthday") is not string birthday) return false;
+
+            var nowDate = DateOnly.FromDateTime(DateTime.UtcNow);
+            var birthdayDate = DateOnly.Parse(birthday);
+
+            var userAge = nowDate.Year - birthdayDate.Year;
+
+            if (nowDate < birthdayDate.AddYears(userAge))
+                userAge--;
+
+            return userAge >= 18;
+        });
+    });
+
 builder.Services.AddSwaggerGen(c =>
 {
     // Add basic authentication scheme to Swagger document
@@ -57,5 +80,15 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+
+var group = app.MapGroup("/api");
+
+group.MapGet("/get-hello", () => "Hello, World !")
+    .WithName("GetHello")
+    .AllowAnonymous();
+
+group.MapGet("/get-plus18", () => "Hello, World , you are +18 !")
+    .WithName("GetPlus18")
+    .RequireAuthorization("AgePlus18");
 
 app.Run();
