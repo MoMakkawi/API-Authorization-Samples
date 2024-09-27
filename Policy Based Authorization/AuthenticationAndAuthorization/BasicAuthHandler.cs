@@ -37,8 +37,10 @@ internal class BasicAuthHandler(
         if (user is null || user.Password != userNameAndPassword[1])
             return AuthenticateResult.Fail("Invalid username or password.");
 
-        // TODO : Add Claims
-        Claim[] claims = [];
+        var claims = new Claim[]
+        {
+            new ("Birthday",user.Birthday.ToString())
+        };
 
         var identity = new ClaimsIdentity(claims, Scheme.Name);
         var principal = new ClaimsPrincipal(identity);
