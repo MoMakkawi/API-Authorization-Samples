@@ -1,5 +1,7 @@
 # ASP .NET Core Web API Authorization Implementation Samples :
 Note: There are many ways to implement those ideas but I will show you mine I also implemented [Basic Authentication](https://github.com/MoMakkawi/API-Authentication-Samples?tab=readme-ov-file#basic-authentication).
+## Policy Based Authorization:
+there are a lot of similarities between Policy Based Authorization and Role-Based Authorization, most important things:
 ## Role-Based Authorization:
 Most important things:
 - I created [Roles.cs](https://github.com/MoMakkawi/API-Authorization-Samples/blob/master/Role%20Based%20Authorization/Entities/Roles.cs), a static class called which has roles as constant strings ```"ADMIN", "USER", "GUEST"```.
