@@ -39,7 +39,8 @@ internal class BasicAuthHandler(
 
         var claims = new Claim[]
         {
-            new ("Birthday",user.Birthday.ToString())
+            new ("Birthday",user.Birthday.ToString()),
+            new ("IsPremium",user.IsPremium.ToString())
         };
 
         var identity = new ClaimsIdentity(claims, Scheme.Name);
