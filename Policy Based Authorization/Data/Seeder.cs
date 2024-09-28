@@ -32,7 +32,8 @@ internal static class Seeder
                     LastName = "Admin LN",
                     UserName = "Admin",
                     Password = "Password",
-                    Birthday = DateOnly.Parse("2000-02-12")
+                    Birthday = DateOnly.Parse("2000-02-12"),
+                    IsPremium = true,
                 },
                 new User
                 {
