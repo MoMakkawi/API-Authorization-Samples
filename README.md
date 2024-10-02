@@ -2,6 +2,29 @@
 Note: There are many ways to implement those ideas but I will show you mine I also implemented [Basic Authentication](https://github.com/MoMakkawi/API-Authentication-Samples?tab=readme-ov-file#basic-authentication).
 ## Policy Based Authorization:
 there are a lot of similarities between Policy Based Authorization and Role-Based Authorization, most important things:
+I applied 2 ways for policy-based authorization, the first one in the [Program.cs](https://github.com/MoMakkawi/API-Authorization-Samples/blob/master/Permission%20Based%20Authorization/Program.cs) it is to check if the user's age plus 18 and the second one is in a separate file to check account subscription.
+### For Policy Based Authorization First Way : 
+ ```cs
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("AgePlus18", builder =>
+    {
+        builder.RequireAssertion(context =>
+        {
+            if (context.User.FindFirstValue("Birthday") is not string birthday) return false;
+
+            var nowDate = DateOnly.FromDateTime(DateTime.UtcNow);
+            var birthdayDate = DateOnly.Parse(birthday);
+
+            var userAge = nowDate.Year - birthdayDate.Year;
+
+            if (nowDate < birthdayDate.AddYears(userAge))
+                userAge--;
+
+            return userAge >= 18;
+        });
+    });
+```
+
 ## Role-Based Authorization:
 Most important things:
 - I created [Roles.cs](https://github.com/MoMakkawi/API-Authorization-Samples/blob/master/Role%20Based%20Authorization/Entities/Roles.cs), a static class called which has roles as constant strings ```"ADMIN", "USER", "GUEST"```.
