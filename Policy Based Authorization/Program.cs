@@ -1,8 +1,6 @@
 using System.Security.Claims;
-
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Policy_Based_Authorization.AuthenticationAndAuthorization;
@@ -14,8 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAuthentication("Basic")
     .AddScheme<AuthenticationSchemeOptions, BasicAuthHandler>("Basic", null);
-
 builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("Subscription", builder => builder.AddRequirements(new SubscriptionAuthorizationRequirement()))
     .AddPolicy("AgePlus18", builder =>
     {
         builder.RequireAssertion(context =>
@@ -33,6 +31,8 @@ builder.Services.AddAuthorizationBuilder()
             return userAge >= 18;
         });
     });
+
+builder.Services.AddScoped<IAuthorizationHandler, SubscriptionAuthorizationHandler>();
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -61,7 +61,6 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-
 // Database Service
 builder.Services.AddDbContext<BloggingContext>(options =>
     options.UseInMemoryDatabase("BloggingDB"));
@@ -83,12 +82,19 @@ app.UseAuthorization();
 
 var group = app.MapGroup("/api");
 
+// without policies.
 group.MapGet("/get-hello", () => "Hello, World !")
     .WithName("GetHello")
     .AllowAnonymous();
 
+// with policy written in this file
 group.MapGet("/get-plus18", () => "Hello, World , you are +18 !")
     .WithName("GetPlus18")
     .RequireAuthorization("AgePlus18");
+
+// with policy written in separated file
+group.MapGet("/get-premium", () => "Hello, World , you are premium!")
+    .WithName("GetPremium")
+    .RequireAuthorization("Subscription");
 
 app.Run();
