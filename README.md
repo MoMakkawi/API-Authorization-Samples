@@ -3,7 +3,7 @@ Note: There are many ways to implement those ideas but I will show you mine I al
 ## Policy Based Authorization:
 there are a lot of similarities between Policy Based Authorization and Role-Based Authorization, most important things:
 I applied 2 ways for policy-based authorization, the first one in the [Program.cs](https://github.com/MoMakkawi/API-Authorization-Samples/blob/master/Permission%20Based%20Authorization/Program.cs) it is to check if the user's age plus 18 and the second one is in a separate file to check account subscription.
-### For Policy Based Authorization First Way : 
+#### For Policy Based Authorization First Way : 
  ```cs
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("AgePlus18", builder =>
