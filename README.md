@@ -26,7 +26,29 @@ builder.Services.AddAuthorizationBuilder()
 ```
 #### For Policy Based Authorization Second Way : 
 It was implemented to check if the subscription is a premium, The most important things:
+- in [SubscribtionAuthorization.cs](https://github.com/MoMakkawi/API-Authorization-Samples/blob/master/Policy%20Based%20Authorization/AuthenticationAndAuthorization/SubscribtionAuthorization.cs) 
+I create 2 classes the first one is the ```SubscriptionAuthorizationRequirement```:
+```cs 
+public class SubscriptionAuthorizationRequirement : IAuthorizationRequirement;
+```
+and it is used for passing parameters (in my example there are no parameters) to the second one ```SubscriptionAuthorizationHandler```  to check if the account subscription is premium
+```cs
+public class SubscriptionAuthorizationHandler : AuthorizationHandler<SubscriptionAuthorizationRequirement>
+{
+    protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, SubscriptionAuthorizationRequirement requirement)
+    {
+        if (context.User.FindFirstValue("IsPremium") is string isPremium && bool.Parse(isPremium))
+            context.Succeed(requirement);
 
+        return Task.CompletedTask;
+    }
+}
+```
+- in the [program.cs](https://github.com/MoMakkawi/API-Authorization-Samples/blob/master/Policy%20Based%20Authorization/Program.cs) file 
+```cs
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("Subscription", builder => builder.AddRequirements(new SubscriptionAuthorizationRequirement()))
+```
 ## Role-Based Authorization:
 Most important things:
 - I created [Roles.cs](https://github.com/MoMakkawi/API-Authorization-Samples/blob/master/Role%20Based%20Authorization/Entities/Roles.cs), a static class called which has roles as constant strings ```"ADMIN", "USER", "GUEST"```.
