@@ -24,6 +24,8 @@ builder.Services.AddAuthorizationBuilder()
         });
     });
 ```
+#### For Policy Based Authorization Second Way : 
+It was implemented to check if the subscription is a premium, The most important things:
 
 ## Role-Based Authorization:
 Most important things:
